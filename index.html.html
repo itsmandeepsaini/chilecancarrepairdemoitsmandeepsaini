@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHILECAN REPAIR | Advanced Automotive & Heavy Duty</title>
+    
+    <!-- Modern Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,300;0,400;0,700;0,800;1,800&family=Jost:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* 
+           BRAND COLOR PALETTE 
+           Extracted from the CHILECAN Logo
+        */
+        :root {
+            --primary-red: #D41420; /* Vibrant Red from top pistons */
+            --primary-blue: #1059A3; /* Strong Blue from wrench/bottom banner */
+            --gradient-red: linear-gradient(135deg, #FF2E2E, #A30008);
+            --gradient-blue: linear-gradient(135deg, #1A75D2, #0A3C74);
+            --dark-grey: #2A2A2A;   /* From Engine Block */
+            --light-grey: #F4F6F9;
+            --white: #ffffff;
+            --text-dark: #1a1a1a;
+            --text-light: #666666;
+            
+            --font-head: 'Exo 2', sans-serif; /* Tech/Futuristic Font matching logo */
+            --font-body: 'Jost', sans-serif;   /* Clean modern sans-serif */
+            
+            --shadow-soft: 0 10px 40px rgba(0,0,0,0.08);
+            --shadow-hover: 0 20px 60px rgba(16, 89, 163, 0.2);
+            --skew-angle: -10deg;
+        }
+
+        /* --- GLOBAL RESET & ANIMATIONS --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        html { scroll-behavior: smooth; overflow-x: hidden; }
+        
+        body {
+            font-family: var(--font-body);
+            color: var(--text-dark);
+            background-color: var(--white);
+            background-image: radial-gradient(#e5e5e5 1px, transparent 1px);
+            background-size: 30px 30px; /* Subtle technical grid background */
+        }
+
+        /* Helper Classes */
+        h1, h2, h3, h4 { font-family: var(--font-head); text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; }
+        .text-red { color: var(--primary-red); }
+        .text-blue { color: var(--primary-blue); }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .section-padding { padding: 100px 0; position: relative; }
+        .hidden-element { opacity: 0; transform: translateY(40px); transition: all 0.8s ease-out; }
+        .show-element { opacity: 1; transform: translateY(0); }
+
+        /* --- BUTTONS --- */
+        .btn-modern {
+            position: relative;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px 40px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--white);
+            text-decoration: none;
+            overflow: hidden;
+            border: none;
+            cursor: pointer;
+            z-index: 1;
+            font-family: var(--font-head);
+            letter-spacing: 1px;
+            transform: skew(-10deg);
+            margin-right: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+
+        .btn-modern span {
+            transform: skew(10deg); /* Counter-skew text */
+            z-index: 2;
+        }
+
+        .btn-red { background: var(--gradient-red); }
+        .btn-blue { background: var(--gradient-blue); }
+        
+        .btn-modern::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255,255,255,0.2);
+            transform: translateX(-100%);
+            transition: 0.4s;
+            z-index: 1;
+        }
+
+        .btn-modern:hover::before { transform: translateX(0); }
+        .btn-modern:hover { transform: skew(-10deg) translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
+
+        /* --- HEADER --- */
+        header {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 10px 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+            transition: 0.3s;
+        }
+
+        .nav-flex { display: flex; justify-content: space-between; align-items: center; }
+
+        .logo-wrapper img {
+            height: 70px; /* Bigger logo as requested */
+            transition: transform 0.5s;
+        }
+        
+        .logo-wrapper img:hover { transform: scale(1.05); filter: drop-shadow(0 0 10px rgba(212, 20, 32, 0.3)); }
+
+        .nav-links { display: flex; list-style: none; gap: 30px; }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark-grey);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            position: relative;
+            transition: 0.3s;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px; left: 0; width: 0%; height: 2px;
+            background: var(--primary-red);
+            transition: 0.3s;
+        }
+        
+        .nav-links a:hover { color: var(--primary-red); }
+        .nav-links a:hover::after { width: 100%; }
+
+        /* Mobile Menu */
+        .hamburger { display: none; font-size: 1.5rem; cursor: pointer; color: var(--primary-blue); }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            height: 95vh;
+            display: flex;
+            align-items: center;
+            background: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            /* Angled background shape */
+            content: '';
+            position: absolute;
+            top: 0; right: 0;
+            width: 55%; height: 100%;
+            background: #f0f4f8;
+            clip-path: polygon(25% 0, 100% 0, 100% 100%, 0% 100%);
+            z-index: 0;
+        }
+
+        .hero-container {
+            position: relative;
+            z-index: 2;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            width: 100%;
+        }
+
+        .hero-text h1 {
+            font-size: 4.5rem;
+            line-height: 0.9;
+            margin-bottom: 25px;
+            font-weight: 800;
+            color: var(--primary-blue);
+        }
+
+        .hero-text h1 span {
+            color: transparent;
+            -webkit-text-stroke: 2px var(--primary-red);
+            display: block;
+        }
+
+        .hero-text p {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-bottom: 40px;
+            max-width: 500px;
+        }
+
+        .hero-visual { position: relative; animation: float 6s ease-in-out infinite; }
+        .hero-visual img { width: 100%; max-width: 600px; filter: drop-shadow(20px 20px 0px rgba(0,0,0,0.1)); border-radius: 10px; }
+
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-20px); } 100% { transform: translateY(0px); } }
+
+        /* --- SERVICES (HOVER EFFECTS) --- */
+        .section-header { text-align: center; margin-bottom: 60px; }
+        .section-header h2 { font-size: 3rem; margin-bottom: 10px; }
+        .title-accent { display: block; height: 4px; width: 60px; background: var(--primary-red); margin: 0 auto; border-radius: 2px; }
+
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow-soft);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(0,0,0,0.05);
+            position: relative;
+            group-hover: 1;
+        }
+
+        .service-card::top {
+            content:''; position: absolute; top:0; left:0; width:100%; height: 5px; background: var(--gradient-blue);
+        }
+
+        .service-img {
+            height: 220px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+        }
+        
+        .service-content { padding: 30px; text-align: center; }
+
+        .service-icon-box {
+            width: 60px; height: 60px;
+            background: var(--white);
+            color: var(--primary-red);
+            font-size: 24px;
+            display: flex; justify-content: center; align-items: center;
+            border-radius: 50%;
+            margin: -60px auto 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 5;
+            border: 3px solid var(--primary-red);
+        }
+
+        .service-card:hover { transform: translateY(-15px); box-shadow: var(--shadow-hover); }
+        .service-card:hover .service-icon-box { background: var(--primary-red); color: var(--white); }
+
+        /* --- BOOKING STRIP --- */
+        .booking-cta {
+            background: var(--dark-grey);
+            padding: 80px 0;
+            color: white;
+            position: relative;
+            clip-path: polygon(0 15%, 100% 0, 100% 85%, 0 100%);
+            margin: 60px 0;
+            text-align: center;
+        }
+        
+        /* Iframe Placeholder */
+        .booking-iframe-container {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 30px auto 0;
+            max-width: 900px;
+            min-height: 400px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        /* --- INSTAGRAM MASONRY --- */
+        .insta-gallery {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .insta-item {
+            position: relative;
+            height: 300px;
+            overflow: hidden;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .insta-item img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .insta-overlay {
+            position: absolute; top:0; left:0; width:100%; height:100%;
+            background: rgba(16, 89, 163, 0.8);
+            display: flex; justify-content: center; align-items: center;
+            opacity: 0; transition: 0.4s;
+        }
+        
+        .insta-overlay i { color: white; font-size: 2rem; transform: scale(0); transition: 0.4s; }
+
+        .insta-item:hover img { transform: scale(1.1); }
+        .insta-item:hover .insta-overlay { opacity: 1; }
+        .insta-item:hover .insta-overlay i { transform: scale(1); }
+
+        /* --- CONTACT SECTION --- */
+        .contact-layout { display: flex; flex-wrap: wrap; gap: 40px; }
+        
+        .contact-info-card {
+            flex: 1;
+            background: var(--light-grey);
+            padding: 50px;
+            border-radius: 20px;
+            border-left: 5px solid var(--primary-red);
+        }
+
+        .contact-detail { display: flex; align-items: flex-start; margin-bottom: 30px; }
+        .contact-icon { font-size: 24px; color: var(--primary-red); margin-right: 20px; margin-top: 5px; }
+        
+        .form-wrapper { flex: 1.5; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+        
+        input, textarea, select {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #eee;
+            background: var(--light-grey);
+            border-radius: 5px;
+            font-family: var(--font-body);
+            transition: 0.3s;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            background: white;
+            box-shadow: 0 5px 20px rgba(16, 89, 163, 0.1);
+        }
+
+        /* --- FOOTER --- */
+        footer { background: #111; color: white; padding: 80px 0 20px; margin-top: 80px; }
+        .footer-logo img { filter: grayscale(100%) brightness(200%); max-width: 200px; margin-bottom: 20px; }
+        .footer-links li { list-style: none; margin-bottom: 10px; }
+        .footer-links a { color: #888; text-decoration: none; transition: 0.3s; }
+        .footer-links a:hover { color: var(--primary-red); padding-left: 5px; }
+        .bottom-bar { border-top: 1px solid #333; margin-top: 50px; padding-top: 20px; text-align: center; color: #555; }
+
+        /* Responsive */
+        @media(max-width: 900px) {
+            .hero-text h1 { font-size: 3rem; }
+            .hero::before { width: 100%; clip-path: none; height: 50%; bottom: 0; top: auto; }
+            .hero-container { grid-template-columns: 1fr; text-align: center; margin-top: 60px;}
+            .hero-text p { margin: 0 auto 30px; }
+            .hamburger { display: block; }
+            .nav-links { 
+                position: fixed; top: 70px; right: -100%; width: 70%; height: 100vh;
+                background: white; flex-direction: column; padding: 40px; box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+                transition: 0.4s;
+            }
+            .nav-links.active { right: 0; }
+            .insta-gallery { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header id="header">
+        <div class="container nav-flex">
+            <!-- LOGO: Points to the logo in same directory -->
+           <a href="#" class="logo-wrapper">
+    <img src="logo.png" alt="Chilecan Repair Logo">
+</a>
+            
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#booking">Book Now</a></li>
+                <li><a href="#gallery">Builds</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li style="color:var(--primary-red); font-weight:800;">(555) 123-4567</li>
+            </ul>
+
+            <div class="hamburger" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-container">
+                <div class="hero-text hidden-element">
+                    <h4>Precision Mechanics</h4>
+                    <h1>AUTOMOTIVE &<br><span>HEAVY DUTY</span></h1>
+                    <p>Experience dealership-level diagnostics and fleet-grade reliability. Chilecan Repair brings modern engineering to your maintenance.</p>
+                    <a href="#booking" class="btn-modern btn-red"><span>Book Appointment</span></a>
+                    <a href="#services" class="btn-modern btn-blue" style="background:var(--dark-grey);"><span>Explore Services</span></a>
+                </div>
+                
+                <div class="hero-visual hidden-element">
+                    <!-- Modern car graphic or workshop image -->
+                    <img src="https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1974&q=80" alt="Chilecan Heavy Duty Repair">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="section-padding">
+        <div class="container">
+            <div class="section-header hidden-element">
+                <h4 class="text-blue">What We Do</h4>
+                <h2>Complete <span class="text-red">Capabilities</span></h2>
+                <span class="title-accent"></span>
+            </div>
+
+            <div class="service-grid">
+                <!-- Service 1 -->
+                <div class="service-card hidden-element">
+                    <div class="service-img" style="background-image: url('https://images.unsplash.com/photo-1574765322979-4d8b9d0dc372?auto=format&fit=crop&w=800');"></div>
+                    <div class="service-icon-box"><i class="fas fa-oil-can"></i></div>
+                    <div class="service-content">
+                        <h3>Preventative Maint.</h3>
+                        <p style="color:#777; font-size:0.9rem; margin-top:10px;">Protect your investment. Factory scheduled maintenance, fluid changes, and filters using OEM quality parts.</p>
+                    </div>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="service-card hidden-element">
+                    <div class="service-img" style="background-image: url('https://images.unsplash.com/photo-1487754180451-c456f719a1fc?auto=format&fit=crop&w=800');"></div>
+                    <div class="service-icon-box"><i class="fas fa-microchip"></i></div>
+                    <div class="service-content">
+                        <h3>Advanced Diagnostics</h3>
+                        <p style="color:#777; font-size:0.9rem; margin-top:10px;">Computerized scanning for engine lights, electrical systems, and complex troubleshooting on modern ECUs.</p>
+                    </div>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="service-card hidden-element">
+                    <div class="service-img" style="background-image: url('https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=800');"></div>
+                    <div class="service-icon-box"><i class="fas fa-truck-moving"></i></div>
+                    <div class="service-content">
+                        <h3>Heavy Duty & Fleet</h3>
+                        <p style="color:#777; font-size:0.9rem; margin-top:10px;">Specialized large-bay repair for semi-trucks, trailers, and commercial fleet vehicles. Minimized downtime.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking CTA (Parallax Vibe) -->
+    <section id="booking" class="booking-cta">
+        <div class="container">
+            <div class="hidden-element">
+                <h2 style="font-size: 2.5rem; margin-bottom: 10px;">Ready to Service Your Vehicle?</h2>
+                <p>Book online instantly through our shop management portal.</p>
+            </div>
+            
+            <div class="booking-iframe-container hidden-element" style="display:flex; justify-content:center; align-items:center; flex-direction:column;">
+                <!-- REPLACE THIS DIV WITH YOUR SHOP MANAGEMENT SYSTEM IFRAME (Shopmonkey/Tekmetric/etc) -->
+                <i class="fas fa-calendar-check text-blue" style="font-size: 5rem; margin-bottom: 20px;"></i>
+                <h3 style="color:var(--dark-grey);">Online Booking Portal</h3>
+                <p style="color:#666;">Your scheduler iframe loads here.</p>
+                <button class="btn-modern btn-red" style="margin-top:20px;">Launch Booking</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Instagram Gallery -->
+    <section id="gallery" class="section-padding">
+        <div class="container">
+            <div class="section-header hidden-element">
+                <h4 class="text-blue">Live from the Shop</h4>
+                <h2>Recent <span class="text-red">Projects</span></h2>
+            </div>
+            
+            <!-- JavaScript mimics IG Feed -->
+            <div class="insta-gallery" id="insta-feed-container">
+                <!-- Images inserted by JS below -->
+            </div>
+            <div style="text-align: center; margin-top: 40px;">
+                <a href="#" class="btn-modern btn-blue" style="background:white; border:2px solid var(--primary-blue); color: var(--primary-blue);"><span>Follow @ChilecanRepair</span></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section-padding" style="background: #fdfdfd;">
+        <div class="container">
+            <div class="section-header hidden-element">
+                <h2>Get in <span class="text-blue">Touch</span></h2>
+            </div>
+
+            <div class="contact-layout hidden-element">
+                <!-- Left: Info -->
+                <div class="contact-info-card">
+                    <h3 style="margin-bottom: 30px;">Chilecan HQ</h3>
+                    
+                    <div class="contact-detail">
+                        <i class="fas fa-map-marker-alt contact-icon"></i>
+                        <div>
+                            <h4>Visit Us</h4>
+                            <p style="color:#666; margin-bottom:10px;">123 Industrial Parkway<br>Your City, State 90210</p>
+                            <a href="#" style="color:var(--primary-blue); font-weight:600;">Get Directions →</a>
+                        </div>
+                    </div>
+
+                    <div class="contact-detail">
+                        <i class="fas fa-phone contact-icon"></i>
+                        <div>
+                            <h4>Call Us</h4>
+                            <p style="color:#666; font-size:1.2rem; font-weight:700;">(555) 123-4567</p>
+                            <p style="color:#888; font-size:0.9rem;">Mon-Fri: 8am - 6pm</p>
+                        </div>
+                    </div>
+
+                    <!-- Embed Map Placeholder -->
+                    <div style="background:#ddd; height: 200px; width:100%; margin-top:20px; border-radius:10px; overflow:hidden;">
+                        <iframe width="100%" height="100%" frameborder="0" style="border:0"
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.1!2d-73.9!3d40.7!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDDCsDQ1JzAwLjAiTiA3M8KwNTgnMDAuMCJX!5e0!3m2!1sen!2sus!4v1619717627476!5m2!1sen!2sus" allowfullscreen></iframe>
+                    </div>
+                </div>
+
+                <!-- Right: Form -->
+                <div class="form-wrapper">
+                    <form onsubmit="event.preventDefault(); alert('Request sent! We will contact you shortly.');">
+                        <h3 style="margin-bottom:20px;">Send a Message</h3>
+                        
+                        <div class="form-row">
+                            <input type="text" placeholder="First Name" required>
+                            <input type="text" placeholder="Last Name">
+                        </div>
+                        
+                        <div class="form-row">
+                            <input type="email" placeholder="Email Address" required>
+                            <input type="tel" placeholder="Phone Number">
+                        </div>
+
+                        <div class="form-row">
+                             <input type="text" placeholder="Vehicle (Year/Make/Model)">
+                        </div>
+                        
+                        <div class="form-row">
+                             <select>
+                                 <option>Type of Service Needed</option>
+                                 <option>General Repair</option>
+                                 <option>Heavy Duty / Fleet</option>
+                                 <option>Diagnostic Check</option>
+                                 <option>Quote Request</option>
+                             </select>
+                        </div>
+
+                        <div class="form-row">
+                            <textarea rows="5" placeholder="Describe the issue..."></textarea>
+                        </div>
+
+                        <button class="btn-modern btn-blue" style="width: 100%;"><span>Send Request</span></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px;">
+            <div class="footer-logo">
+                 <img src="https://i.imgur.com/h5T27zL.png" alt="Chilecan Repair Logo">
+                 <p style="color:#777; line-height: 1.6; font-size: 0.9rem;">High-tech automotive and heavy-duty repair services. Certified mechanics, warrantied parts, and superior service.</p>
+            </div>
+            
+            <div>
+                <h4>Navigate</h4>
+                <ul class="footer-links" style="margin-top:20px;">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#booking">Book Appointment</a></li>
+                    <li><a href="#about">About Us</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4>Services</h4>
+                <ul class="footer-links" style="margin-top:20px;">
+                    <li><a href="#">Engine & Transmission</a></li>
+                    <li><a href="#">Fleet Management</a></li>
+                    <li><a href="#">Brake Systems</a></li>
+                    <li><a href="#">Computer Diagnostics</a></li>
+                </ul>
+            </div>
+            
+            <div>
+                <h4>Connect</h4>
+                <div style="margin-top: 20px;">
+                    <a href="#" style="color:white; margin-right:15px; font-size:1.2rem;"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" style="color:white; margin-right:15px; font-size:1.2rem;"><i class="fab fa-instagram"></i></a>
+                    <a href="#" style="color:white; margin-right:15px; font-size:1.2rem;"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="bottom-bar">
+            &copy; 2024 Chilecan Repair. All rights reserved. Designed for Performance.
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE SCRIPTS -->
+    <script>
+        // 1. SCROLL ANIMATION OBSERVER (Fade in Elements)
+        const observerOptions = {
+            threshold: 0.15 // Trigger when 15% of element is visible
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show-element');
+                    observer.unobserve(entry.target); // Play animation only once
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.hidden-element').forEach(el => observer.observe(el));
+
+        // 2. MOBILE MENU TOGGLE
+        function toggleMenu() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        }
+
+        // 3. POPULATE FAKE INSTAGRAM FEED
+        // In production, use a widget like ElfSight or SnapWidget. This mocks the layout.
+        const instaImages = [
+            'https://images.unsplash.com/photo-1550616110-38c2323a6358?auto=format&fit=crop&w=400',
+            'https://images.unsplash.com/photo-1596706037746-15f5d023253a?auto=format&fit=crop&w=400',
+            'https://images.unsplash.com/photo-1588619623910-85f269a92f03?auto=format&fit=crop&w=400',
+            'https://images.unsplash.com/photo-1625043484550-df60256f6ea5?auto=format&fit=crop&w=400'
+        ];
+
+        const instaContainer = document.getElementById('insta-feed-container');
+        instaImages.forEach(imgUrl => {
+            const div = document.createElement('div');
+            div.className = 'insta-item';
+            div.className += ' hidden-element'; // Add animation class
+            div.innerHTML = `
+                <img src="${imgUrl}" alt="Shop Work">
+                <div class="insta-overlay">
+                    <i class="fab fa-instagram"></i>
+                </div>
+            `;
+            instaContainer.appendChild(div);
+            // Must observe dynamic element for animation
+            observer.observe(div);
+        });
+
+    </script>
+</body>
+</html>
